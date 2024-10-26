@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #a8e0f8, #f8b5b5);
+        }
+        header {
+            width: 100%;
+            height: 100px;
+            background-color: black;
+            color: white;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        img {
+            width: 150px;
+            cursor: pointer;
+            margin-top: -20px;
+        }
+        main {
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 100px);
+            flex-direction: column; 
+        }
+        h2 {
+            margin: 0;
+            margin-bottom: 20px;
+            color: #232f3e;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            box-sizing: border-box;
+        }
+       
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+        input {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 95%;
+        }
+
+  
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1.2em;
+            color: gray !important;
+            margin-top: 3px;
+        }
+        .strength-bar {
+            height: 4px;
+            border-radius: 4px;
+            margin-top: 5px;
+            width: 100%;
+            background-color: #ddd;
+            transition: width 0.5s ease, background-color 0.5s ease;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #357ae8;
+        }
+        #reg-message {
+            margin-top: 20px;
+            color: green;
+            text-align: center;
+        }
+        .password-hint, .mismatch-hint, .strength-hint {
+            color: #ff0000;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none; /* Oculto por defecto */
+        }
+
+.terms-container {
+    margin-top: 20px; /* Espacio superior */
+    display: flex;
+    justify-content: center; /* Centrar el contenido */
+    align-items: center; /* Alinear verticalmente */
+}
+
+.terms-container label {
+    color: #555;
+    margin: 0; /* Eliminar márgenes para evitar espacios innecesarios */
+}
+
+input[type="checkbox"] {
+    margin-right: 5px; /* Espacio entre el checkbox y el texto */
+    transform: scale(1.2); /* Aumentar el tamaño del checkbox, si lo deseas */
+}
+
+label.password-label {
+    margin-top: 20px; /* Ajusta el valor según tus preferencias */
+}
+
+.password-label {
+    margin-top: 20px; /* Ajusta este valor si es necesario */
+}
+
+.password-container {
+    margin-top: 0px; /* Agrega un margen superior al contenedor */
+}
+    </style>
+</head>
+<body>
+    <canvas id="background"></canvas>
+    <header>
+        <a href="amazon.html">
+            <img src="imagenes/logo.png" alt="Logo de Amazon">
+        </a>
+    </header>
+    <main>
+        <h2>Crear Cuenta</h2> 
+        <form id="register-form" onsubmit="registerUser(event)">
+            <label for="reg-email">Correo electrónico:</label>
+            <input type="email" id="reg-email" required>
+
+<label for="reg-password" class="password-label">Contraseña:</label>
+<div class="password-container">
+    <input type="password" id="reg-password" required>
+    <span class="toggle-password" onclick="togglePassword('reg-password')"><i class="far fa-eye"></i></span>
+</div>
+
+<div class="strength-bar" id="strength-bar"></div>
+<div class="password-hint" id="password-hint">La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial.</div>
+<div class="strength-hint" id="strength-hint">Por favor, elige una contraseña más segura.</div>
+
+<label for="reg-password-confirm" class="password-label">Confirmar Contraseña:</label>
+<div class="password-container">
+    <input type="password" id="reg-password-confirm" required>
+    <span class="toggle-password" onclick="togglePassword('reg-password-confirm')"><i class="far fa-eye"></i></span>
+</div>
+
+
+
+            <div class="mismatch-hint" id="mismatch-hint">Las contraseñas no coinciden.</div>
+           <div class="terms-container">
+    <label>
+        <input type="checkbox" required> Acepto los <a href="terminos.html" target="_blank">términos y condiciones</a>.
+    </label>
+</div>
+
+            <button type="submit">Registrar</button>
+        </form>
+        <div id="reg-message"></div>
+    </main>
+    
+    <script>
+        function togglePassword(id) {
+            const passwordField = document.getElementById(id);
+            const type = passwordField.type === "password" ? "text" : "password";
+            passwordField.type = type;
+
+            const icon = document.querySelector(`.toggle-password i`);
+            icon.className = type === "password" ? "far fa-eye" : "far fa-eye-slash"; // Cambiar el ícono
+        }
+
+        function getPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 3) strength++; // Cambiado a 3 caracteres
+            if (password.length >= 8) strength++; // Agregar una verificación adicional para longitud
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength++;
+            return strength;
+        }
+
+        document.getElementById('reg-password').addEventListener('input', function() {
+            const password = this.value;
+            const strength = getPasswordStrength(password);
+            const strengthBar = document.getElementById('strength-bar');
+            const passwordHint = document.getElementById('password-hint');
+            const strengthHint = document.getElementById('strength-hint');
+
+            if (password.length < 3) {
+                strengthBar.style.width = '20%';
+                strengthBar.style.backgroundColor = 'red';
+                passwordHint.style.display = 'block';
+                strengthHint.style.display = 'block'; // Muestra el mensaje de advertencia
+            } else if (strength < 3) {
+                strengthBar.style.width = '50%';
+                strengthBar.style.backgroundColor = 'orange';
+                passwordHint.style.display = 'block';
+                strengthHint.style.display = 'block'; // Muestra el mensaje de advertencia
+            } else {
+                strengthBar.style.width = '100%';
+                strengthBar.style.backgroundColor = 'green';
+                passwordHint.style.display = 'none';
+                strengthHint.style.display = 'none'; // Oculta el mensaje de advertencia
+            }
+        });
+
+        function registerUser(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const passwordConfirm = document.getElementById('reg-password-confirm').value;
+            const passwordHint = document.getElementById('password-hint');
+            const mismatchHint = document.getElementById('mismatch-hint');
+            const strengthHint = document.getElementById('strength-hint');
+
+            if (getPasswordStrength(password) < 3) {
+                passwordHint.style.display = 'block';
+                mismatchHint.style.display = 'none';
+                strengthHint.style.display = 'block'; // Asegúrate de que el mensaje de advertencia esté visible
+                return;
+            } else {
+                passwordHint.style.display = 'none';
+                strengthHint.style.display = 'none'; // Oculta el mensaje de advertencia
+            }
+
+            if (password !== passwordConfirm) {
+                mismatchHint.style.display = 'block';
+                return;
+            } else {
+                mismatchHint.style.display = 'none';
+            }
+
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userPassword', password);
+            alert("Se ha enviado un correo de verificación a " + email);
+            document.getElementById('reg-message').innerText = "Usuario registrado exitosamente. ¡Redirigiendo a la página de inicio de sesión...";
+
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

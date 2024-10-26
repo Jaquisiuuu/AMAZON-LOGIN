@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css"> <!-- Enlazando el archivo CSS -->
+    <title>Iniciar sesión</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            width: 100%;
+            background-color: black;
+            border: 2px solid black;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        h1 {
+            color: white;
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        main {
+            margin-top: 100px; /* Para evitar que el contenido quede detrás del encabezado */
+            padding: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input {
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkblue;
+        }
+
+        #message {
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Iniciar sesión en Amazon</h1>
+    </header>
+    <main>
+        <form id="login-form" onsubmit="loginUser(event)">
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" required>
+            <br>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" required>
+            <br>
+            <button type="submit">Iniciar sesión</button>
+        </form>
+        <div id="message"></div>
+    </main>
+
+    <script>
+        function loginUser(event) {
+            event.preventDefault(); // Evita que el formulario se envíe
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Obtener datos guardados del almacenamiento local
+            const storedEmail = localStorage.getItem('userEmail');
+            const storedPassword = localStorage.getItem('userPassword');
+
+            // Validar los datos
+            if (email === storedEmail && password === storedPassword) {
+                document.getElementById('message').innerText = "Inicio de sesión exitoso. ¡Bienvenido!";
+                // Aquí puedes redirigir a otra página si lo deseas
+                // window.location.href = 'otra-pagina.html';
+            } else {
+                document.getElementById('message').innerText = "Correo o contraseña incorrectos.";
+            }
+        }
+    </script>
+</body>
+</html>
